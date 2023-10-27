@@ -25,7 +25,7 @@ export default function Navigation() {
 
 			<ul className='mt-20 flex flex-col gap-4 h-full w-full'>
 				{links.map((link) => (
-					<li>
+					<li key={link.route}>
 						<Link
 							href='#'
 							className='text-neutral-100 text-lg cursor-pointer ml-5'>
