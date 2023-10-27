@@ -21,17 +21,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					<Navigation />
 
 					<main className='py-5 px-8'>{children}</main>
-
-					<div id='fb-rootlayout'></div>
-
-					<div
-						className='fb-login-button'
-						data-width='200'
-						data-size=''
-						data-button-type=''
-						data-layout=''
-						data-auto-logout-link='true'
-						data-use-continue-as='true'></div>
 				</div>
 			</body>
 
@@ -39,8 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				async
 				defer
 				crossOrigin='anonymous'
-				src='https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v18.0&appId=1783970742042452'
-				nonce='Y2kVOzv0'></script>
+				src='https://connect.facebook.net/en_US/sdk.js'></script>
 		</html>
 	);
 }

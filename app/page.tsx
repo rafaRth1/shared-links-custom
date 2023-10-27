@@ -1,6 +1,21 @@
+'use client';
+
 import Image from 'next/image';
 import CardRedSocial from '@/components/CardRedSocial/CardRedSocial';
 import { IoLogoFacebook } from 'react-icons/io5';
+import { fbLogin } from '@/utils/FacebookSDK';
+
+function login() {
+	console.log('reached log in button');
+	fbLogin().then((response: any) => {
+		console.log(response);
+		if (response.status === 'connected') {
+			console.log('Person is connected');
+		} else {
+			// something
+		}
+	});
+}
 
 export default function Home() {
 	return (
@@ -16,6 +31,12 @@ export default function Home() {
 					sizeIcon={35}
 				/>
 			</div>
+
+			<button
+				className='bg-blue-600 text-neutral-100 p-2 rounded-md'
+				onClick={login}>
+				Login Facebook
+			</button>
 		</div>
 	);
 }
