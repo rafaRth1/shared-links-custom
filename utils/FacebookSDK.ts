@@ -1,3 +1,12 @@
+declare global {
+	interface Window {
+		fbAsyncInit: any;
+		FB: any;
+	}
+}
+
+let FB = window.fbAsyncInit;
+
 export const initFacebookSdk = () => {
 	return new Promise((resolve: any, reject) => {
 		// Load the Facebook SDK asynchronously
@@ -16,7 +25,7 @@ export const initFacebookSdk = () => {
 
 export const getFacebookLoginStatus = () => {
 	return new Promise((resolve: any, reject) => {
-		window.FB.getLoginStatus((response) => {
+		window.FB.getLoginStatus((response: any) => {
 			resolve(response);
 		});
 	});
@@ -24,7 +33,7 @@ export const getFacebookLoginStatus = () => {
 
 export const fbLogin = () => {
 	return new Promise((resolve: any, reject) => {
-		window.FB.login((response) => {
+		window.FB.login((response: any) => {
 			resolve(response);
 		});
 	});
