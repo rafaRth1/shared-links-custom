@@ -12,10 +12,10 @@ export const initFacebookSdk = () => {
 		// Load the Facebook SDK asynchronously
 		window.fbAsyncInit = () => {
 			window.FB.init({
-				appId: '1268250524120464',
+				appId: '1783970742042452',
 				cookie: true,
 				xfbml: true,
-				version: 'v16.0',
+				version: 'v18.0',
 			});
 			// Resolve the promise when the SDK is loaded
 			resolve();
