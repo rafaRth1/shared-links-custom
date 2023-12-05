@@ -1,7 +1,10 @@
-import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
+import type { Metadata } from 'next';
 import Navigation from '@/components/Navigation/Navigation';
+import TabsProvider from '@/context/TabsContext/TabsProvider';
 import './globals.css';
+import Header from '@/components/Header/Header';
+1;
 
 const poppins = Poppins({
 	subsets: ['latin'],
@@ -17,18 +20,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang='en'>
 			<body className={poppins.className}>
-				<div className='min-h-screen flex'>
-					<Navigation />
+				<div className='min-h-screen flex relative'>
+					<TabsProvider>
+						<Navigation />
 
-					<main className='py-5 px-8'>{children}</main>
+						<main className=' absolute inset-0 left-0 xl:left-[260px] py-5 px-8 overflow-x-hidden overflow-y-auto'>
+							<Header />
+
+							<div className='relative w-full'>{children}</div>
+						</main>
+					</TabsProvider>
 				</div>
 			</body>
-
-			<script
-				async
-				defer
-				crossOrigin='anonymous'
-				src='https://connect.facebook.net/en_US/sdk.js'></script>
 		</html>
 	);
 }

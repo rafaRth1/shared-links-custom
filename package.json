@@ -6,16 +6,23 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ngrok": "ngrok http 3000"
   },
   "dependencies": {
-    "@types/facebook-js-sdk": "^3.3.9",
+    "chart.js": "^4.4.0",
+    "faker": "^6.6.6",
+    "framer-motion": "^10.16.5",
     "next": "13.5.6",
+    "ngrok": "^5.0.0-beta.2",
     "react": "^18",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "react-icons": "^4.11.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.3.1",
+    "@types/facebook-js-sdk": "^3.3.9",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

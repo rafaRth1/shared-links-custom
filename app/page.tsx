@@ -1,42 +1,16 @@
-'use client';
+import { TabsRedSocial } from './components';
 
-import Image from 'next/image';
-import CardRedSocial from '@/components/CardRedSocial/CardRedSocial';
-import { IoLogoFacebook } from 'react-icons/io5';
-import { fbLogin } from '@/utils/FacebookSDK';
-
-function login() {
-	console.log('reached log in button');
-	fbLogin().then((response: any) => {
-		console.log(response);
-		if (response.status === 'connected') {
-			console.log('Person is connected');
-		} else {
-			// something
-		}
-	});
-}
-
-export default function Home() {
+export default async function Home() {
 	return (
-		<div className=''>
-			<h1 className='text-neutral-100 text-2xl font-medium my-8'>Metrics Social</h1>
+		<div className='metric-social'>
+			<h2 className='text-neutral-100 text-xl mt-8 mb-5'>
+				¡Buenos dias!
+				<span className='font-semibold'> Rafael Alvarez </span>
+				<span className='text-3xl'>👋</span>
+				<p className='text-neutral-500'>Tu datos de tus red social esta aquí</p>
+			</h2>
 
-			<div>
-				<CardRedSocial
-					nameRedSocial='Facebook'
-					NameIcon={IoLogoFacebook}
-					countFollowers='956'
-					colorIcon='#0966feff'
-					sizeIcon={35}
-				/>
-			</div>
-
-			<button
-				className='bg-blue-600 text-neutral-100 p-2 rounded-md'
-				onClick={login}>
-				Login Facebook
-			</button>
+			<TabsRedSocial />
 		</div>
 	);
 }
