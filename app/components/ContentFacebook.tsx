@@ -46,7 +46,7 @@ export function ContentFacebook() {
 					<CardRedSocial
 						nameRedSocial='Followers'
 						NameIcon={IoPeople}
-						followersCount={`${followersCount ? followersCount : '0'}`}
+						followersCount={`${followersCount ? followersCount : '1020'}`}
 						sizeIcon={20}
 						nameCount='0 last month'
 						colorIcon='#9ca3af'
@@ -56,7 +56,7 @@ export function ContentFacebook() {
 					<CardRedSocial
 						nameRedSocial='Likes'
 						NameIcon={IoHeartSharp}
-						followersCount={`${likesCount ? likesCount : '0'}`}
+						followersCount={`${likesCount ? likesCount : '2254'}`}
 						colorIcon='#f21361ff'
 						sizeIcon={20}
 						nameCount='15 last month'
@@ -66,7 +66,7 @@ export function ContentFacebook() {
 					<CardRedSocial
 						nameRedSocial='Reach'
 						NameIcon={IoPodium}
-						followersCount={`${reachCount ? reachCount : '0'}`}
+						followersCount={`${reachCount ? reachCount : '4684'}`}
 						sizeIcon={20}
 						nameCount='1020 last month'
 						colorIcon=''
