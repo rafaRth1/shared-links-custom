@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
-import { getFollowersTypeDate } from "@/services/services_facebook";
 import {
   Chart as ChartJS,
   BarElement,
@@ -15,6 +14,18 @@ import {
   CategoryScale,
   Tooltip,
 } from "chart.js";
+import { IoChevronDownSharp } from "react-icons/io5";
+
+interface Props {
+  /**
+   * Variants === className
+   */
+  variants?: string;
+  /**
+   * Nombre principal de la estadística
+   */
+  name: string;
+}
 
 export const options = {
   responsive: true,
@@ -29,7 +40,7 @@ export const options = {
   },
 };
 
-export function AreaChart({ variants }: { variants?: string }) {
+function AreaChart({ variants, name }: Props) {
   const [typeDate, setTypeDate] = useState("last_7d");
   const [valuesChart, setValuesChart] = useState({
     labels: ["1", "2", "3", "4", "5", "6", "7"],
@@ -59,28 +70,6 @@ export function AreaChart({ variants }: { variants?: string }) {
           JSON.parse(localStorage.getItem("access_token_page")!) || {};
 
         if (access_token) {
-          try {
-            const response = await getFollowersTypeDate(
-              id,
-              typeDate,
-              access_token
-            );
-
-            const newArrayDataChart = response[0].values.map(
-              (value: { value: string; end_time: string }) => value.value
-            );
-
-            const newArrayLabels = response[0].values.map(
-              (value: { value: string; end_time: string }) =>
-                value.end_time.split("-")[2].split("T")[0]
-            );
-            setValuesChart({
-              labels: newArrayLabels,
-              dataSets: newArrayDataChart,
-            });
-          } catch (error) {
-            // console.log("Error handlerTypeDate");
-          }
         }
       }
     };
@@ -105,22 +94,28 @@ export function AreaChart({ variants }: { variants?: string }) {
       className={`card-area-chart bg-[#2D2C2D] border border-neutral-600 rounded-md p-5 ${variants}`}
     >
       <header className="flex flex-col min-[500px]:flex-row justify-between">
-        <div>
-          <span className="text-neutral-100 font-medium">Followers</span>
+        <div className="mb-4 min-[500px]:mb-0">
+          <span className="text-neutral-100 font-medium">{name}</span>
           <p className="text-neutral-300">Estadística de tus seguidores</p>
         </div>
 
-        <select
-          className="rounded-lg bg-[#101010] text-neutral-100 px-2 py-2 my-3 min-[500px]:my-0"
-          onChange={(e) => setTypeDate(e.target.value)}
-        >
-          <option value="last_7d">Esta Semana</option>
-          <option value="last_14d">Estos 14 días</option>
-          <option value="this_month">Este Mes</option>
-        </select>
+        <div className="grid">
+          <IoChevronDownSharp className="pointer-events-none z-10 right-1 relative col-start-1 row-start-1 h-4 w-4 self-center justify-self-end forced-colors:hidden text-neutral-200" />
+
+          <select
+            className="appearance-none forced-colors:appearance-auto border row-start-1 col-start-1 rounded-lg bg-[#101010] text-neutral-200 p-2 border-none pr-6 pl-3"
+            onChange={(e) => setTypeDate(e.target.value)}
+          >
+            <option value="last_7d">Esta Semana</option>
+            <option value="last_14d">Estos 14 días</option>
+            <option value="this_month">Este Mes</option>
+          </select>
+        </div>
       </header>
 
-      <Bar className="chart-area " options={options} data={data} height={250} />
+      <Bar className="chart-area " options={options} data={data} height={150} />
     </div>
   );
 }
+
+export default AreaChart;

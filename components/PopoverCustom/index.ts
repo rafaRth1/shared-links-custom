@@ -1,17 +1,15 @@
-import { PopoverCustom as PopoverPattern } from "./PopoverCustom";
+import PopoverPattern from "./PopoverCustom";
 
-import { Trigger } from "./Trigger";
-import { Body } from "./Body";
-import { PopoverContent } from "./PopoverContent";
+import Trigger from "./Trigger";
+import Body from "./Body";
+import PopoverContent from "./PopoverContent";
 
-export { Trigger } from "./Trigger";
-export { Body } from "./Body";
-export { PopoverContent } from "./PopoverContent";
+import "./PopoverCustom.css";
 
-export const PopoverCustom = Object.assign(PopoverPattern, {
+const PopoverCustom = Object.assign(PopoverPattern, {
   Trigger: Trigger,
   Body: Body,
   PopoverContent: PopoverContent,
 });
 
-export default PopoverCustom;
+export { PopoverCustom, Trigger, Body, PopoverContent };

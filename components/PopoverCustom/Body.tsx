@@ -1,17 +1,22 @@
-"use client";
-
-import { createPortal } from "react-dom";
-import { useState, useEffect, useContext } from "react";
+import {
+  useState,
+  useContext,
+  ReactElement,
+  useLayoutEffect,
+  useEffect,
+} from "react";
 import { PopoverContext } from "./PopoverContext";
+import { PopoverInternal } from "./PopoverInternal";
+import { createPortal } from "react-dom";
 
 interface Props {
-  children: React.ReactElement;
+  children: ReactElement | ReactElement[];
 }
 
 function useDelayUnmount(isMounted: boolean, delayTime: number) {
   const [shouldRender, setShouldRender] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let timeoutId: any;
 
     if (isMounted && !shouldRender) {
@@ -28,30 +33,25 @@ function useDelayUnmount(isMounted: boolean, delayTime: number) {
   return shouldRender;
 }
 
-export function Body({ children }: Props) {
-  const { isMounted, triggerRect } = useContext(PopoverContext);
+function Body({ children }: Props) {
+  const { isMounted } = useContext(PopoverContext);
+  const [mounted, setMounted] = useState(false);
   const shouldRenderChild = useDelayUnmount(isMounted, 100);
-  const mountedStyle = { animation: "inAnimation 100ms ease-in" };
-  const unmountedStyle = { animation: "outAnimation 110ms ease-in" };
 
-  if (typeof window === "object") {
-    return createPortal(
-      shouldRenderChild && (
-        <div
-          style={{
-            ...(isMounted ? mountedStyle : unmountedStyle),
-            position: "absolute",
-            top: `${triggerRect.top + (triggerRect.height + 10)}px`,
-            left: `${triggerRect.left - 2 * triggerRect.width}px`,
-            transformOrigin: `100% 0% 0px`,
-          }}
-        >
-          {children}
-        </div>
-      ),
-      document.body
-    );
-  }
+  useEffect(() => setMounted(true), []);
 
-  return null;
+  return mounted
+    ? createPortal(
+        shouldRenderChild && (
+          <div tabIndex={-1}>
+            <PopoverInternal>{children}</PopoverInternal>
+          </div>
+        ),
+        document.body
+      )
+    : null;
 }
+
+Body.displayName = "PopoverCustom.Body";
+
+export default Body;

@@ -5,6 +5,9 @@ import {
   cloneElement,
   useMemo,
   Children,
+  useState,
+  useEffect,
+  useCallback,
 } from "react";
 import { PopoverContext } from "./PopoverContext";
 
@@ -12,8 +15,8 @@ interface Props {
   children: ReactElement;
 }
 
-export const Trigger = ({ children }: Props) => {
-  const { isMounted, setIsMounted, setTriggerRect } =
+const Trigger = ({ children }: Props) => {
+  const { isMounted, setIsMounted, setTriggerRect, triggerRect } =
     useContext(PopoverContext);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -42,4 +45,6 @@ export const Trigger = ({ children }: Props) => {
   return childrenTrigger;
 };
 
-// Trigger.displayName = 'Popover.Trigger';
+Trigger.displayName = "PopoverCustom.Trigger";
+
+export default Trigger;
