@@ -5,7 +5,7 @@ interface Props {
   children: (isShow: boolean, onClose: () => void) => JSX.Element;
 }
 
-export const PopoverContent = ({ children }: Props) => {
+const PopoverContent = ({ children }: Props) => {
   const { isMounted, setIsMounted } = useContext(PopoverContext);
 
   const onClose = () => {
@@ -15,4 +15,6 @@ export const PopoverContent = ({ children }: Props) => {
   return children(isMounted, onClose);
 };
 
-// PopoverContent.displayName = "Popover.PopoverContent";
+PopoverContent.displayName = "Popover.PopoverContent";
+
+export default PopoverContent;

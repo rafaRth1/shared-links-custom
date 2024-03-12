@@ -1,2 +1,2 @@
-export * from './PageFields';
-export * from './PageFollowsInsights';
+export * from "./PageFields";
+export * from "./PageInsights";

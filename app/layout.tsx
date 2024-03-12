@@ -1,7 +1,7 @@
-import { Poppins } from "next/font/google";
 import type { Metadata } from "next";
-import { Header } from "@/components/";
-import TabsProvider from "@/context/TabsContext/TabsProvider";
+import { AuthProvider } from "@/context";
+import { Poppins } from "next/font/google";
+import Providers from "./Providers";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -22,14 +22,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} relative`}>
-        <div className="min-h-screen flex relative">
-          <TabsProvider>
-            <main className=" absolute inset-0 left-0 xl:left-[260px] py-5 px-8 overflow-x-hidden overflow-y-auto">
-              <Header />
-              <div className="relative w-full">{children}</div>
-            </main>
-          </TabsProvider>
-        </div>
+        <Providers>
+          <AuthProvider>
+            <div className="h-[100dvh] relative">
+              <main className="relative w-full min-h-screen">{children}</main>
+            </div>
+          </AuthProvider>
+        </Providers>
       </body>
     </html>
   );

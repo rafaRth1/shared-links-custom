@@ -1,0 +1,9 @@
+export { default as BannerImage } from "./BannerImage";
+export { default as PerfilImage } from "./PerfilImage";
+export { default as CustomBio } from "./CustomBio";
+export { default as FormLink } from "./FormLink";
+export { default as InputDescription } from "./InputDescription";
+export { default as InputNickname } from "./InputNickname";
+export { default as LinkBio } from "./LinkBio";
+export { default as LinksBio } from "./LinksBio";
+export { default as PreviewBio } from "./PreviewBio";

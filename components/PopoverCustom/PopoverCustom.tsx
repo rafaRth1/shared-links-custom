@@ -1,18 +1,33 @@
 "use client";
 
-import { useState, ReactElement, memo, useEffect } from "react";
-import { PopoverContext, Position } from "./PopoverContext";
+import { useState, ReactElement, useEffect } from "react";
+import { PopoverContext, Position, Rect } from "./PopoverContext";
 
 interface PropsModal {
   children: ReactElement | ReactElement[];
+
+  /**
+   * Position in which you want to designate
+   * @default bottom
+   */
+
   preferredPosition: Position;
+  /**
+   * True or false if you want the width to be equal to the trigger starting from 480px
+   * @default false
+   */
+  widthEqualTrigger?: boolean;
 }
 
-const defaultRect = {
+const defaultRect: Rect = {
   left: 0,
+  right: 0,
   top: 0,
   width: 0,
   height: 0,
+  bottom: 0,
+  x: 0,
+  y: 0,
 };
 
 function useDelayUnmount(isMounted: boolean, delayTime: number) {
@@ -35,9 +50,10 @@ function useDelayUnmount(isMounted: boolean, delayTime: number) {
   return shouldRender;
 }
 
-export const PopoverCustom = ({
+const PopoverCustom = ({
   children,
-  preferredPosition = "bottom-center",
+  preferredPosition = "bottom",
+  widthEqualTrigger = false,
 }: PropsModal) => {
   const [isMounted, setIsMounted] = useState(false);
   const [triggerRect, setTriggerRect] = useState(defaultRect);
@@ -50,6 +66,7 @@ export const PopoverCustom = ({
     setTriggerRect,
     preferredPosition,
     shouldRenderChild,
+    widthEqualTrigger,
   };
 
   return (
@@ -58,3 +75,7 @@ export const PopoverCustom = ({
     </PopoverContext.Provider>
   );
 };
+
+PopoverCustom.displayName = "PopoverCustom.Trigger";
+
+export default PopoverCustom;

@@ -1,12 +1,24 @@
 import { createContext } from "react";
 
 export type Position =
-  | "bottom-center"
+  | "bottom"
+  | "bottom-start"
+  | "bottom-end"
   | "left"
+  | "left-start"
+  | "left-end"
   | "right"
-  | "top-center"
+  | "right-start"
+  | "right-end"
+  | "top"
+  | "top-start"
+  | "top-end"
   | "static";
-export type Rect = Pick<DOMRect, "left" | "top" | "width" | "height">;
+
+export type Rect = Pick<
+  DOMRect,
+  "left" | "top" | "right" | "width" | "height" | "bottom" | "x" | "y"
+>;
 
 export interface PopoverContextProps {
   isMounted: boolean;
@@ -15,6 +27,7 @@ export interface PopoverContextProps {
   setTriggerRect: React.Dispatch<React.SetStateAction<Rect>>;
   preferredPosition: Position;
   shouldRenderChild: boolean;
+  widthEqualTrigger: boolean;
 }
 
 export const PopoverContext = createContext<PopoverContextProps>(

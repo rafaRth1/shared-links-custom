@@ -1,67 +1,83 @@
 "use client";
 
 import { useState } from "react";
-import Navigation from "../Navigation/Navigation";
+import { signOut, useSession } from "next-auth/react";
+import MenuMobile from "../MenuMobile/MenuMobile";
+import Link from "next/link";
 import { PopoverCustom } from "@/components/PopoverCustom";
-import {
-  IoMenuSharp,
-  IoNotificationsOutline,
-  IoSearchOutline,
-} from "react-icons/io5";
+import { links } from "@/data/links";
+import { IoMenuOutline } from "react-icons/io5";
 
-export function Header() {
-  const [activeNav, setActiveNav] = useState(false);
+export default function Header() {
+  const [isActiveMenu, setIsActiveMenu] = useState(false);
+  const session = useSession();
+
+  const nameShort = `${session.data?.user.firstname[0]}${session.data?.user.lastname[0]}`;
 
   return (
-    <header className="flex items-center text-neutral-100">
-      <Navigation activeNav={activeNav} setActiveNav={setActiveNav} />
+    <header className="flex items-center text-neutral-100 py-4 px-5 bg-neutral-900">
+      <nav className="flex items-center relative flex-1">
+        <Link
+          href={"/metric-social"}
+          className="text-neutral-100 text-xl block mr-5d "
+        >
+          Shared Links Custom
+        </Link>
 
-      <IoMenuSharp
-        size={30}
-        className="xl:hidden cursor-pointer"
-        onClick={() => setActiveNav(!activeNav)}
-      />
+        <ul className="flex items-center">
+          {links.map(({ label, route }) => (
+            <li key={route} className="hidden min-[684px]:block">
+              <Link
+                href={route}
+                className="flex items-center cursor-pointer p-3 rounded-md"
+              >
+                <span className="flex-1 text-neutral-100 hover:text-[#AC88F6] text-sm transition-all">
+                  {label}
+                </span>
+              </Link>
+            </li>
+          ))}
 
-      <div className="flex items-center relative flex-1">
-        <IoSearchOutline className="block ml-4 min-[460px]:absolute left-2 text-xl" />
-
-        <input
-          type="text"
-          id="search"
-          className="bg-[#2D2C2D] border border-neutral-600 rounded-md ml-4 p-2 pl-9 outline-none text-sm hidden min-[460px]:block min-[460px]:w-[260px] flex-1"
-          placeholder="Busca alguna sección"
-        />
-      </div>
+          <li className="min-[684px]:hidden ml-3">
+            <IoMenuOutline
+              size={30}
+              className="cursor-pointer"
+              onClick={() => setIsActiveMenu(!isActiveMenu)}
+            />
+          </li>
+        </ul>
+      </nav>
 
       <div className="flex items-center">
-        {/* <IoNotificationsOutline
-          size={20}
-          className="cursor-pointer block ml-4"
-        /> */}
-
-        <PopoverCustom preferredPosition="left">
+        <PopoverCustom preferredPosition="bottom-end" widthEqualTrigger={false}>
           <PopoverCustom.PopoverContent>
             {() => (
               <>
                 <PopoverCustom.Trigger>
-                  <picture className="ml-4 cursor-pointer">
-                    <img
-                      src="./profile.png"
-                      alt="Image Network Social"
-                      className="rounded-full w-9 h-9"
-                    />
-                  </picture>
+                  <div className="flex items-center justify-center bg-neutral-600 p-2 h-10 w-10 rounded-full cursor-pointer">
+                    {nameShort === "undefinedundefined" ? "" : nameShort}
+                  </div>
                 </PopoverCustom.Trigger>
 
                 <PopoverCustom.Body>
                   <div
-                    className={`border-neutral-600 bg-neutral-800 flex flex-col border rounded-md transition-opacity z-40 w-32 p-2`}
+                    className={`border-neutral-600 bg-neutral-800 flex flex-col border rounded-md transition-opacity z-40 w-56 p-2`}
                   >
+                    <Link
+                      href="/settings"
+                      className="block text-white hover:bg-neutral-700 transition-colors cursor-pointer p-2 rounded"
+                      onClick={() =>
+                        console.log("Ingresando a la sección cuenta")
+                      }
+                    >
+                      Configuracion
+                    </Link>
+
                     <span
                       className="block text-white hover:bg-red-600 transition-colors cursor-pointer p-2 rounded"
-                      onClick={() => console.log("handleLogout")}
+                      onClick={() => signOut()}
                     >
-                      Logout
+                      Cerrar Sesión
                     </span>
                   </div>
                 </PopoverCustom.Body>
@@ -70,8 +86,11 @@ export function Header() {
           </PopoverCustom.PopoverContent>
         </PopoverCustom>
       </div>
+
+      <MenuMobile
+        isActiveMenu={isActiveMenu}
+        setIsActiveMenu={setIsActiveMenu}
+      />
     </header>
   );
 }
-
-export default Header;
