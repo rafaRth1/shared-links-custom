@@ -35,11 +35,13 @@ export default function PerfilImage({ dataBio, setDataBio }: Props) {
 
       const dataImageUpload = await respImageUpload?.json();
 
+      console.log(dataImageUpload);
+
       const { data } = await clientAxios.put(
         "/bio/edit-bio",
         {
           _id: dataBio._id,
-          imageProfile: dataImageUpload?.url,
+          imageProfile: dataImageUpload?.secure_url,
         },
         config
       );

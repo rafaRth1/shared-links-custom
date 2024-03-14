@@ -5,15 +5,6 @@ const nextConfig = {
     URL_FRONTEND: process.env.NEXTAUTH_URL,
   },
   reactStrictMode: true,
-
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: "https://shared-link-custom-backend.vercel.app/:path*",
-      },
-    ];
-  },
 };
 
 module.exports = nextConfig;
