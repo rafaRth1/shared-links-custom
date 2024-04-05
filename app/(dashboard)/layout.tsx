@@ -3,7 +3,7 @@ import { Header, Navigation } from "@/components";
 export default function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }) {
   return (
     <section className="relative min-h-screen">

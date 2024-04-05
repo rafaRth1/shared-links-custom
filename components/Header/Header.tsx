@@ -6,7 +6,10 @@ import MenuMobile from "../MenuMobile/MenuMobile";
 import Link from "next/link";
 import { PopoverCustom } from "@/components/PopoverCustom";
 import { links } from "@/data/links";
+import SharedLinkCustom from "@/public/sharedlinkcustom-logo.png";
 import { IoMenuOutline } from "react-icons/io5";
+import Image from "next/image";
+import { Logo } from "..";
 
 export default function Header() {
   const [isActiveMenu, setIsActiveMenu] = useState(false);
@@ -19,9 +22,9 @@ export default function Header() {
       <nav className="flex items-center relative flex-1">
         <Link
           href={"/metric-social"}
-          className="text-neutral-100 text-xl block mr-5d "
+          className="text-neutral-100 text-xl block mr-5 mt-1"
         >
-          Shared Links Custom
+          <Logo />
         </Link>
 
         <ul className="flex items-center">

@@ -39,7 +39,7 @@ export default function BannerImage({ dataBio, setDataBio }: Props) {
         "/bio/edit-bio",
         {
           _id: dataBio._id,
-          bannerImage: dataImageUpload?.url,
+          bannerImage: dataImageUpload?.secure_url,
         },
         config
       );
