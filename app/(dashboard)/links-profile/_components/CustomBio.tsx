@@ -11,6 +11,8 @@ import {
   PerfilImage,
 } from "./";
 import { UserDataBio } from "@/types";
+import Tabs from "@/components/tabs/tabs";
+import Tab from "@/components/tabs/tab";
 
 interface Props {
   dataBio: UserDataBio;
@@ -45,31 +47,42 @@ export default function CustomBio({ dataBio, setDataBio }: Props) {
   };
 
   return (
-    <section className="flex-auto lg:w-3/5 p-4">
-      <div className="mb-6">
+    <section className="basis-3/4 p-4 overflow-y-auto appearance-none [&::-webkit-scrollbar]:bg-[#1a1b1a] [&::-webkit-scrollbar-thumb]:bg-[#333a35] [&::-webkit-scrollbar]:w-[5px] [&::-webkit-scrollbar-thumb]:rounded-lg [&::-webkit-scrollbar]:mr-[-10px]">
+      <div className="max-w-[672px] mx-auto">
         <h2 className="text-neutral-100 text-lg text-center font-medium mb-6">
           Personaliza tu biografía de enlaces
         </h2>
 
-        <div>
-          <div className="bg-[#1a1b1a] mb-5">
-            <PerfilImage dataBio={dataBio} setDataBio={setDataBio} />
-            <BannerImage dataBio={dataBio} setDataBio={setDataBio} />
-          </div>
+        <Tabs>
+          <Tab
+            key="enlaces"
+            title="Enlaces"
+            varients="px-3 py-1 text-neutral-200"
+          >
+            <FormLink dataBio={dataBio} setDataBio={setDataBio} />
 
-          <InputNickname dataBio={dataBio} setDataBio={setDataBio} />
+            <LinksBio
+              dataBio={dataBio}
+              setDataBio={setDataBio}
+              handleDeleteLink={handleDeleteLink}
+            />
+          </Tab>
+          <Tab
+            key="apariencia"
+            title="Apariencia"
+            varients="px-3 py-1 text-neutral-200"
+          >
+            <InputNickname dataBio={dataBio} setDataBio={setDataBio} />
 
-          <InputDescription dataBio={dataBio} setDataBio={setDataBio} />
-        </div>
+            <InputDescription dataBio={dataBio} setDataBio={setDataBio} />
+
+            <div className="mt-5">
+              <PerfilImage dataBio={dataBio} setDataBio={setDataBio} />
+              <BannerImage dataBio={dataBio} setDataBio={setDataBio} />
+            </div>
+          </Tab>
+        </Tabs>
       </div>
-
-      <FormLink dataBio={dataBio} setDataBio={setDataBio} />
-
-      <LinksBio
-        dataBio={dataBio}
-        setDataBio={setDataBio}
-        handleDeleteLink={handleDeleteLink}
-      />
     </section>
   );
 }

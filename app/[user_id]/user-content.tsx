@@ -11,10 +11,6 @@ interface Props {
 }
 
 export default function UserContent({ data }: Props) {
-  // console.log(data);
-
-  console.log("reender");
-
   useEffect(() => {
     const userView = localStorage.getItem("id_user");
     const userAgentId = navigator.userAgent.replace(/\D+/g, "");

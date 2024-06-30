@@ -56,17 +56,21 @@ export default function PerfilImage({ dataBio, setDataBio }: Props) {
   };
 
   return (
-    <>
-      <span className="block text-neutral-300 mb-2 text-sm">
+    <div className="">
+      <span className="block text-neutral-300 mb-3 text-sm">
         Agrega un perfil de imagen:
       </span>
 
       <button
-        className="w-full text-neutral-100 bg-[#101010] p-3 rounded border-neutral-500 border-2 border-dashed active:bg-neutral-900 active:scale-[.99] mb-5"
+        className="flex flex-col justify-center items-center w-full h-36 text-neutral-100 bg-[#101010] rounded border-neutral-500 border-2 border-dashed active:bg-neutral-900 active:scale-[.99] mb-5"
         onClick={() => fileInputRef.current?.click()}
       >
-        <IoImageOutline size="20" className="inline" />
-        <span className="ml-3">Seleccionar imagen de perfil</span>
+        <IoImageOutline
+          size="45"
+          className="inline p-3 bg-neutral-800 rounded-full mb-3"
+        />
+        <span>Seleccionar imagen de perfil</span>
+        <span className="text-sm text-neutral-400">Cantidad maxima 1MB</span>
       </button>
 
       <input
@@ -75,6 +79,6 @@ export default function PerfilImage({ dataBio, setDataBio }: Props) {
         className="hidden"
         ref={fileInputRef}
       />
-    </>
+    </div>
   );
 }

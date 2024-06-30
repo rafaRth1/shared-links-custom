@@ -43,8 +43,8 @@ export default function InputNickname({ dataBio, setDataBio }: Props) {
   }, [debouncedValue]);
 
   return (
-    <div className="bg-[#1a1b1a] mb-5">
-      <label className="block text-neutral-300 mb-2 text-sm" htmlFor="name-bio">
+    <div className="my-5">
+      <label className="block text-neutral-300 mb-3 text-sm" htmlFor="name-bio">
         Escriba su nombre para su perfil:
       </label>
 

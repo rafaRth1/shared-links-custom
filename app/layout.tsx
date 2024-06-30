@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { AuthProvider } from "@/context";
 import { Poppins } from "next/font/google";
-import Providers from "./Providers";
+import Providers from "./providers";
+import { NextUIProvider } from "@nextui-org/react";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -20,13 +21,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body className={`${poppins.className} relative`}>
         <Providers>
           <AuthProvider>
-            <div className="h-[100dvh] relative">
-              <main className="relative w-full min-h-screen">{children}</main>
-            </div>
+            <div className="relative">{children}</div>
           </AuthProvider>
         </Providers>
       </body>

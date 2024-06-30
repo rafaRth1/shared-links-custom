@@ -1,60 +1,52 @@
 "use client";
 
 import Link from "next/link";
-import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { useMediaQueryNew } from "@/hooks";
 import { links } from "@/data/links";
-import { Logo } from "@/components";
-import { IoCloseCircleOutline, IoMenuOutline } from "react-icons/io5";
+import { Logo } from "..";
 
-function Navigation() {
+export default function Navigation() {
+  const session = useSession();
+  const match = useMediaQueryNew(
+    "(min-width:1280px)",
+    true,
+    matchMedia,
+    null,
+    false
+  );
+
+  const nameShort = `${session.data?.user.firstname[0]}${session.data?.user.lastname[0]}`;
+
   return (
-    <nav
-      className={`fixed ${
-        false ? "left-0" : "-left-full"
-      } -left-full xl:left-0 top-0 bottom-0 w-[260px] min-w-[260px] h-screen p-5 bg-[#2D2C2D] flex flex-col justify-between items-start z-50 transition-all`}
-    >
-      <div className="flex items-center">
-        <Logo />
-        <IoCloseCircleOutline
-          size="30"
-          className="cursor-pointer xl:hidden"
-          // onClick={() => setActiveNav((prevState) => !prevState)}
-        />
-      </div>
-
-      <ul className="mt-20 flex flex-col h-full w-full">
-        {links.map(({ label, route, subRoute, Icon }) => (
-          <li key={route}>
+    <aside className="relative text-neutral-100">
+      {match ? (
+        <div className="flex flex-col h-full w-[250px]">
+          <nav className="fixed top-0 left-0 h-full flex flex-col flex-1 py-4 px-5 bg-neutral-900">
             <Link
-              href={route}
-              className="flex items-center text-neutral-100 text-base cursor-pointer p-3 hover:bg-neutral-800 rounded-md"
+              href={"/metric-social"}
+              className="text-neutral-100 text-xl block mt-1"
             >
-              <span className="ml-3 flex-1">{label}</span>
+              <Logo />
             </Link>
 
-            {/* <ul className="ml-5">
-              {subRoute
-                ? subRoute.map(({ label, route: subRoute, Icon }, index) => (
-                    <li
-                      key={`${subRoute}`}
-                      onClick={() => setSelectedNumber(index + 1)}
-                      className="flex items-center text-neutral-200 p-2 hover:bg-neutral-800 rounded-md cursor-pointer"
-                    >
-                      {Icon ? <Icon /> : null}
-                      <span className="ml-3 flex-1">{label}</span>
-                    </li>
-                  ))
-                : null}
-            </ul> */}
-          </li>
-        ))}
-      </ul>
-
-      <button className="text-neutral-100" onClick={() => signOut()}>
-        Logout
-      </button>
-    </nav>
+            <ul className="flex flex-col flex-1 w-full mt-5">
+              {links.map(({ label, route }) => (
+                <li key={route} className="hidden min-[684px]:block">
+                  <Link
+                    href={route}
+                    className="flex items-center cursor-pointer p-3 rounded-md"
+                  >
+                    <span className="flex-1 text-neutral-100 hover:text-[#AC88F6] text-sm transition-all">
+                      {label}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      ) : null}
+    </aside>
   );
 }
-
-export default Navigation;

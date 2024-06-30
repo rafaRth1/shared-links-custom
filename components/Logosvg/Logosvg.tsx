@@ -2,7 +2,7 @@ export default function Logosvg() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="240"
+      width="210"
       zoomAndPan="magnify"
       viewBox="0 0 180 30.000001"
       height="40"

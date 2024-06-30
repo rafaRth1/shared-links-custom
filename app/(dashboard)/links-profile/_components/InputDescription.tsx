@@ -40,9 +40,9 @@ export default function InputDescription({ dataBio, setDataBio }: Props) {
   }, [debouncedValue]);
 
   return (
-    <div className="bg-[#1a1b1a] mb-5">
+    <div className="mb-5">
       <label
-        className="block text-neutral-300 mb-2 text-sm"
+        className="block text-neutral-300 mb-3 text-sm"
         htmlFor="description"
       >
         Escriba su descripción para su perfil:

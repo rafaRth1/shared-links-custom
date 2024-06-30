@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getSession } from "next-auth/react";
 import clientAxios from "@/utils/client-axios";
@@ -34,12 +33,12 @@ export default function Links() {
   }, []);
 
   return (
-    <div className="links-profile">
+    <div className="links-profile h-full">
       <h1 className="text-neutral-100 text-2xl font-medium my-8">
         Personaliza tus enlaces sociales
       </h1>
 
-      <div className="links-profile-content ">
+      <div className="links-profile-content">
         {!dataBio._id ? (
           <div className="flex flex-col">
             <div className="animate-pulse w-full h-4 bg-neutral-800 rounded col-span-2 mb-5"></div>
@@ -53,20 +52,9 @@ export default function Links() {
           </div>
         ) : (
           <>
-            <p className="text-neutral-100">
-              Este es su perfil de enlace{" "}
-              <Link
-                href={`http://localhost:3000/${dataBio.name}`}
-                target="_blank"
-                className="hover:underline hover:text-blue-500"
-              >
-                {`shared-link-custom/${dataBio.name}`}
-              </Link>
-            </p>
-
-            <div className="flex flex-col lg:flex-row">
-              <PreviewBio dataBio={dataBio} />
+            <div className="flex flex-col-reverse lg:flex-row">
               <CustomBio dataBio={dataBio} setDataBio={setDataBio} />
+              <PreviewBio dataBio={dataBio} />
             </div>
           </>
         )}

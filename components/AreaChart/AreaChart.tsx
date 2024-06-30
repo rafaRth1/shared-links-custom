@@ -1,20 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  BarElement,
-  BarController,
-  LineController,
-  LineElement,
-  PointElement,
-  LinearScale,
-  Title,
-  CategoryScale,
-  Tooltip,
-} from "chart.js";
-import { IoChevronDownSharp } from "react-icons/io5";
+import { useEffect } from "react";
+import dynamic from "next/dynamic";
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import { ApexOptions } from "apexcharts";
 
 interface Props {
   /**
@@ -25,97 +14,166 @@ interface Props {
    * Nombre principal de la estadística
    */
   name: string;
+  labels: Date[];
+  value: number[];
 }
 
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top" as const,
-    },
-    title: {
-      display: true,
-      text: "",
-    },
-  },
-};
+function AreaChart({ variants, name, labels, value }: Props) {
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.localStorage) {
+      return;
+    }
+  }, []);
 
-function AreaChart({ variants, name }: Props) {
-  const [typeDate, setTypeDate] = useState("last_7d");
-  const [valuesChart, setValuesChart] = useState({
-    labels: ["1", "2", "3", "4", "5", "6", "7"],
-    dataSets: ["100", "242", "112", "643", "64", "743", "201"],
-  });
+  const data = [
+    {
+      name: name,
+      data: value,
+    },
+  ];
 
-  const data = {
-    labels: valuesChart.labels,
-    datasets: [
-      {
-        label: "Followers",
-        data:
-          valuesChart.dataSets.length > 0
-            ? valuesChart.dataSets
-            : ["100", "200", "300", "400", "500", "600", "700"],
-        backgroundColor: "#AC88F6",
-        borderWidth: 1,
-        borderRadius: 5,
+  const options: ApexOptions = {
+    chart: {
+      height: 350,
+      type: "line",
+      toolbar: {
+        show: false,
+        autoSelected: "pan",
       },
-    ],
+    },
+
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: "smooth",
+      width: 2,
+    },
+
+    grid: {
+      strokeDashArray: 5,
+      borderColor: "rgba(24, 24, 27, 0.5)",
+    },
+
+    colors: ["rgba(192, 132, 252, 0.9)"],
+
+    yaxis: {
+      labels: {
+        style: {
+          colors: "#71717a",
+        },
+      },
+    },
+
+    tooltip: {
+      x: {
+        format: "dd/MM/yy HH:mm",
+      },
+    },
+
+    xaxis: {
+      type: "datetime",
+      labels: {
+        style: {
+          colors: "#71717a",
+        },
+      },
+
+      axisBorder: {
+        show: false,
+      },
+
+      axisTicks: {
+        show: false,
+      },
+
+      categories: labels,
+    },
   };
 
-  useEffect(() => {
-    const handlerTypeDate = async () => {
-      if (typeof window !== "undefined" && window.localStorage) {
-        const { access_token, id }: { access_token: string; id: string } =
-          JSON.parse(localStorage.getItem("access_token_page")!) || {};
-
-        if (access_token) {
-        }
-      }
-    };
-
-    handlerTypeDate();
-  }, [typeDate]);
-
-  ChartJS.register(
-    BarElement,
-    BarController,
-    CategoryScale,
-    LineController,
-    LineElement,
-    PointElement,
-    LinearScale,
-    Title,
-    Tooltip
-  );
-
   return (
-    <div
-      className={`card-area-chart bg-[#2D2C2D] border border-neutral-600 rounded-md p-5 ${variants}`}
-    >
-      <header className="flex flex-col min-[500px]:flex-row justify-between">
-        <div className="mb-4 min-[500px]:mb-0">
-          <span className="text-neutral-100 font-medium">{name}</span>
-          <p className="text-neutral-300">Estadística de tus seguidores</p>
-        </div>
+    <div className={`card-area-chart bg-[#2D2C2D] rounded-md p-5 ${variants}`}>
+      <div className="mb-4 min-[500px]:mb-0">
+        <span className="text-neutral-100 font-medium">{name}</span>
+        <p className="text-neutral-300">{`Estadística de tus ${name.toLowerCase()}`}</p>
+      </div>
 
-        <div className="grid">
-          <IoChevronDownSharp className="pointer-events-none z-10 right-1 relative col-start-1 row-start-1 h-4 w-4 self-center justify-self-end forced-colors:hidden text-neutral-200" />
-
-          <select
-            className="appearance-none forced-colors:appearance-auto border row-start-1 col-start-1 rounded-lg bg-[#101010] text-neutral-200 p-2 border-none pr-6 pl-3"
-            onChange={(e) => setTypeDate(e.target.value)}
-          >
-            <option value="last_7d">Esta Semana</option>
-            <option value="last_14d">Estos 14 días</option>
-            <option value="this_month">Este Mes</option>
-          </select>
-        </div>
-      </header>
-
-      <Bar className="chart-area " options={options} data={data} height={150} />
+      <Chart
+        options={options}
+        series={data}
+        type="area"
+        height={350}
+        width="100%"
+      />
     </div>
   );
 }
 
 export default AreaChart;
+
+// export const options: ChartOptions<"bar"> = {
+//   // type: "line",
+//   responsive: true,
+//   maintainAspectRatio: true,
+//   plugins: {
+//     legend: {
+//       position: "top" as const,
+//       display: false,
+//     },
+//     title: {
+//       display: true,
+//       text: "",
+//     },
+//   },
+
+//   scales: {
+//     y: {
+//       grid: {
+//         display: true,
+//         color: "rgba(24, 24, 27, 0.3)",
+//       },
+
+//       border: {
+//         display: false,
+//         // dash: [30],
+//       },
+//     },
+
+//     x: {
+//       grid: {
+//         display: false,
+//       },
+//     },
+//   },
+
+//   elements: {
+//     bar: {
+//       borderRadius: 7,
+//       borderWidth: 3,
+//       // backgroundColor: "rgba(245, 40, 145, 0.1)",
+//       backgroundColor: (context) => {
+//         const bgColor = [
+//           "rgba(192, 132, 252, 0.1)",
+//           "rgba(192, 132, 252, 0.5)",
+//         ];
+
+//         if (!context.chart.chartArea) {
+//           return;
+//         }
+
+//         const {
+//           ctx,
+//           chartArea: { top, bottom },
+//         } = context.chart;
+//         const gradientBg = ctx.createLinearGradient(0, bottom, 0, top);
+
+//         gradientBg.addColorStop(0, bgColor[0]);
+//         gradientBg.addColorStop(1, bgColor[1]);
+
+//         return gradientBg;
+//       },
+//       borderColor: "rgba(192, 132, 252)",
+//       // color: "rgba(245, 40, 145, 0.8)",
+//     },
+//   },
+// };
