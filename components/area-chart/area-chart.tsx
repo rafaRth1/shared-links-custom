@@ -14,11 +14,20 @@ interface Props {
    * Nombre principal de la estadística
    */
   name: string;
+  description: string;
+  colorChart: string;
   labels: Date[];
   value: number[];
 }
 
-function AreaChart({ variants, name, labels, value }: Props) {
+function AreaChart({
+  variants,
+  name,
+  labels,
+  value,
+  description,
+  colorChart,
+}: Props) {
   useEffect(() => {
     if (typeof window !== "undefined" && window.localStorage) {
       return;
@@ -55,7 +64,7 @@ function AreaChart({ variants, name, labels, value }: Props) {
       borderColor: "rgba(24, 24, 27, 0.5)",
     },
 
-    colors: ["rgba(192, 132, 252, 0.9)"],
+    colors: [`${colorChart}`],
 
     yaxis: {
       labels: {
@@ -67,8 +76,9 @@ function AreaChart({ variants, name, labels, value }: Props) {
 
     tooltip: {
       x: {
-        format: "dd/MM/yy HH:mm",
+        format: "dd/MM/yy",
       },
+      theme: "dark",
     },
 
     xaxis: {
@@ -92,10 +102,10 @@ function AreaChart({ variants, name, labels, value }: Props) {
   };
 
   return (
-    <div className={`card-area-chart bg-[#2D2C2D] rounded-md p-5 ${variants}`}>
+    <div className={`card-area-chart bg-[#0d0d0d] rounded-md p-5 ${variants}`}>
       <div className="mb-4 min-[500px]:mb-0">
         <span className="text-neutral-100 font-medium">{name}</span>
-        <p className="text-neutral-300">{`Estadística de tus ${name.toLowerCase()}`}</p>
+        <p className="text-neutral-300">{`${description}`}</p>
       </div>
 
       <Chart

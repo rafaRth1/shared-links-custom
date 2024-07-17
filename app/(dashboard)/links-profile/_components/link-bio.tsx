@@ -1,19 +1,26 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { Button, Input } from "@nextui-org/react";
+import { handleEditLinkService } from "@/services/bio-services";
 import { useDebounce, useUpdateEffect } from "@/hooks";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import clientAxios from "@/utils/client-axios";
 import { LinksBio, UserDataBio } from "@/types";
-import { IoLink, IoReorderTwo } from "react-icons/io5";
+import { IoReorderTwo } from "react-icons/io5";
 
 interface Props {
   link: LinksBio;
   dataBio: UserDataBio;
   setDataBio: React.Dispatch<React.SetStateAction<UserDataBio>>;
+  handleDeleteLink: (idLink: string) => Promise<void>;
 }
 
-export default function LinkBio({ link, dataBio, setDataBio }: Props) {
+export default function LinkBio({
+  link,
+  dataBio,
+  setDataBio,
+  handleDeleteLink,
+}: Props) {
   const [values, setValues] = useState({
     url: link.url,
     customName: link.customName,
@@ -36,24 +43,13 @@ export default function LinkBio({ link, dataBio, setDataBio }: Props) {
     transition,
   };
 
-  const handleEditUrl = async () => {
+  const handleEditLink = async () => {
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session?.user.token}`,
-        },
-      };
-
-      const { data } = await clientAxios.post(
-        "/bio/edit-link",
-        {
-          _id: dataBio._id,
-          idLink: link._id,
-          url: values.url,
-          custonName: values.customName,
-        },
-        config
+      const { data } = await handleEditLinkService(
+        link._id,
+        values.url,
+        values.customName,
+        session
       );
 
       const linksUpdate = dataBio.links.map((linkUpdate) => {
@@ -78,12 +74,12 @@ export default function LinkBio({ link, dataBio, setDataBio }: Props) {
   };
 
   useUpdateEffect(() => {
-    handleEditUrl();
+    handleEditLink();
   }, [debouncedValueUrl, debouncedValueCustonName]);
 
   return (
     <div
-      className="bg-[#2D2C2D] mt-7 py-4 px-5 rounded-md"
+      className="bg-[#0d0d0d] mt-7 py-4 px-5 rounded-md z-50"
       ref={setNodeRef}
       {...attributes}
       {...listeners}
@@ -94,41 +90,31 @@ export default function LinkBio({ link, dataBio, setDataBio }: Props) {
 
         <div className="flex-1" />
 
-        <button
+        <Button
           className="bg-rose-600 py-2 px-3 rounded-md active:scale-95"
-          onClick={() => console.log("handleDeleteLink(link._id)")}
+          onClick={() => handleDeleteLink(link._id)}
         >
           Eliminar
-        </button>
+        </Button>
       </header>
 
-      <div className="text-neutral-100 mt-4 relative">
-        <span className="block mb-2 text-sm">Enlace</span>
-        <input
-          autoComplete="off"
-          name="link"
-          type="text"
-          placeholder="Escribe o pega tu enlace aquí"
-          className="w-full bg-neutral-800 py-3 px-2 outline-none pl-10"
-          value={values.url}
-          onChange={(e) => setValues({ ...values, url: e.target.value })}
-        />
-        <IoLink className="absolute top-11 ml-3" />
-      </div>
+      <Input
+        type="text"
+        label="Enlace"
+        placeholder="Editar enlance"
+        className="my-4"
+        value={values.url}
+        onChange={(e) => setValues({ ...values, url: e.target.value })}
+      />
 
-      <div className="text-neutral-100 mt-4 relative">
-        <span className="block mb-2 text-sm">Nombre Enlace</span>
-        <input
-          autoComplete="off"
-          name="name-enlace"
-          type="text"
-          placeholder="Escribe o pega tu enlace aquí"
-          className="w-full bg-neutral-800 py-3 px-2 outline-none pl-10"
-          value={values.customName}
-          onChange={(e) => setValues({ ...values, customName: e.target.value })}
-        />
-        <IoLink className="absolute top-11 ml-3" />
-      </div>
+      <Input
+        type="text"
+        label="Nombre enlace"
+        placeholder="Escribe o pega tu enlace aquí"
+        className="my-4"
+        value={values.customName}
+        onChange={(e) => setValues({ ...values, customName: e.target.value })}
+      />
     </div>
   );
 }

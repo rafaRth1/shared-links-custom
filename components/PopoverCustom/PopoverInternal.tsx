@@ -18,13 +18,7 @@ export const PopoverInternal = ({
   const mountedStyle = { animation: "inAnimation 100ms ease-in" };
   const unmountedStyle = { animation: "outAnimation 110ms ease-in" };
   const ref = useRef<HTMLDivElement>(null);
-  const match = useMediaQueryNew(
-    "(min-width:480px)",
-    true,
-    matchMedia,
-    null,
-    false
-  );
+  const match = useMediaQueryNew("(min-width:480px)", true, null, false);
 
   useEffect(() => {
     const element = ref.current;

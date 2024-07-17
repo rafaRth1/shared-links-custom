@@ -10,20 +10,15 @@ import {
 } from "@nextui-org/react";
 import { links } from "@/data/links";
 import Link from "next/link";
-import Logo from "../Logo/Logo";
-import { IoCloseOutline, IoMenuOutline } from "react-icons/io5";
+import Logo from "../logo/logo";
+import { IoMenuOutline } from "react-icons/io5";
 import { useMediaQueryNew } from "@/hooks";
 import { signOut } from "next-auth/react";
 
 export default function Menu() {
   const [active, setActive] = useState(false);
-  const match = useMediaQueryNew(
-    "(min-width:1280px)",
-    true,
-    matchMedia,
-    null,
-    false
-  );
+
+  const match = useMediaQueryNew("(min-width:1280px)", true, null, false);
 
   useEffect(() => {
     if (match) {
@@ -32,7 +27,7 @@ export default function Menu() {
   }, [match]);
 
   return (
-    <div className="flex p-4">
+    <div className="flex p-4 z-30">
       <div className="xl:hidden ml-3">
         <IoMenuOutline
           size={30}
@@ -67,7 +62,7 @@ export default function Menu() {
 
             <ul className="flex flex-col flex-1 w-full mt-5">
               {links.map(({ label, route }) => (
-                <li key={route} className="hidden min-[684px]:block">
+                <li key={route}>
                   <Link
                     href={route}
                     className="flex items-center cursor-pointer p-3 rounded-md"
@@ -85,11 +80,11 @@ export default function Menu() {
 
       <div className="flex-1" />
 
-      <Dropdown placement="bottom-end" className="bg-[#2D2C2D]">
+      <Dropdown placement="bottom-end" className="bg-[#0d0d0d]">
         <DropdownTrigger>
           <Avatar
             name="Rafael Alvarez"
-            className="cursor-pointer bg-[#2D2C2D]"
+            className="cursor-pointer bg-[#0d0d0d]"
           />
         </DropdownTrigger>
         <DropdownMenu aria-label="Profile Actions" variant="flat">

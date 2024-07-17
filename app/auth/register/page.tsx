@@ -1,13 +1,14 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Input } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { Spinner } from "@/components/Spinner/Spinner";
-import clientAxios from "@/utils/client-axios";
+import { clientAxios } from "@/utils";
 import BgRegister from "@/public/bg-register.jpg";
-import Link from "next/link";
 
 export default function Register() {
   const [loading, setLoading] = useState(false);
@@ -81,100 +82,55 @@ export default function Register() {
             Registro de usuario
           </h1>
 
-          <div className="bg-[#1a1b1a] mb-5">
-            <label
-              className="block text-neutral-300 mb-2 text-sm"
-              htmlFor="name-bio"
-            >
-              Escriba su nombre:
-            </label>
+          <Input
+            type="text"
+            label="Escriba su nombre"
+            className="my-4"
+            value={dataForm.firstName}
+            onChange={(e) =>
+              setDataForm({ ...dataForm, firstName: e.target.value })
+            }
+          />
 
-            <input
-              id="firstname"
-              type="text"
-              className="bg-neutral-800 text-neutral-100 p-2 w-full rounded-lg border-2 border-neutral-500 hover:border-neutral-600 focus-visible:border-neutral-400 outline-none"
-              value={dataForm.firstName}
-              onChange={(e) =>
-                setDataForm({ ...dataForm, firstName: e.target.value })
-              }
-            />
-          </div>
+          <Input
+            type="text"
+            label="Escriba su apellido"
+            className="my-4"
+            value={dataForm.lastName}
+            onChange={(e) =>
+              setDataForm({ ...dataForm, lastName: e.target.value })
+            }
+          />
 
-          <div className="bg-[#1a1b1a] mb-5">
-            <label
-              className="block text-neutral-300 mb-2 text-sm"
-              htmlFor="name-bio"
-            >
-              Escriba su apellido:
-            </label>
+          <Input
+            type="text"
+            label="Escriba su sobre nombre"
+            className="my-4"
+            value={dataForm.nickName}
+            onChange={(e) =>
+              setDataForm({ ...dataForm, nickName: e.target.value })
+            }
+          />
 
-            <input
-              id="lastname"
-              type="text"
-              className="bg-neutral-800 text-neutral-100 p-2 w-full rounded-lg border-2 border-neutral-500 hover:border-neutral-600 focus-visible:border-neutral-400 outline-none"
-              value={dataForm.lastName}
-              onChange={(e) =>
-                setDataForm({ ...dataForm, lastName: e.target.value })
-              }
-            />
-          </div>
+          <Input
+            type="email"
+            label="Escriba su email"
+            className="my-4"
+            value={dataForm.email}
+            onChange={(e) =>
+              setDataForm({ ...dataForm, email: e.target.value })
+            }
+          />
 
-          <div className="bg-[#1a1b1a] mb-5">
-            <label
-              className="block text-neutral-300 mb-2 text-sm"
-              htmlFor="name-bio"
-            >
-              Escriba su sobre nombre:
-            </label>
-
-            <input
-              id="nickname"
-              type="text"
-              className="bg-neutral-800 text-neutral-100 p-2 w-full rounded-lg border-2 border-neutral-500 hover:border-neutral-600 focus-visible:border-neutral-400 outline-none"
-              value={dataForm.nickName}
-              onChange={(e) =>
-                setDataForm({ ...dataForm, nickName: e.target.value })
-              }
-            />
-          </div>
-
-          <div className="bg-[#1a1b1a] mb-5">
-            <label
-              className="block text-neutral-300 mb-2 text-sm"
-              htmlFor="name-bio"
-            >
-              Escriba su email:
-            </label>
-
-            <input
-              id="email"
-              type="email"
-              className="bg-neutral-800 text-neutral-100 p-2 w-full rounded-lg border-2 border-neutral-500 hover:border-neutral-600 focus-visible:border-neutral-400 outline-none"
-              value={dataForm.email}
-              onChange={(e) =>
-                setDataForm({ ...dataForm, email: e.target.value })
-              }
-            />
-          </div>
-
-          <div className="bg-[#1a1b1a] mb-5">
-            <label
-              className="block text-neutral-300 mb-2 text-sm"
-              htmlFor="name-bio"
-            >
-              Escriba su contraseña:
-            </label>
-
-            <input
-              id="password"
-              type="password"
-              className="bg-neutral-800 text-neutral-100 p-2 w-full rounded-lg border-2 border-neutral-500 hover:border-neutral-600 focus-visible:border-neutral-400 outline-none"
-              value={dataForm.password}
-              onChange={(e) =>
-                setDataForm({ ...dataForm, password: e.target.value })
-              }
-            />
-          </div>
+          <Input
+            type="password"
+            label="Escriba su contraseña"
+            className="my-4"
+            value={dataForm.password}
+            onChange={(e) =>
+              setDataForm({ ...dataForm, password: e.target.value })
+            }
+          />
 
           <p className="text-neutral-100 text-sm mb-5">
             ¿Te olvidaste tus credenciales?,{" "}

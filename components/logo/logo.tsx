@@ -1,4 +1,4 @@
-import Logosvg from "../Logosvg/Logosvg";
+import Logosvg from "../logo-svg/logo-svg";
 
 export default function Logo() {
   return (

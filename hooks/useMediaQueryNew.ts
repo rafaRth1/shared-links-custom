@@ -9,10 +9,15 @@ const maybeReactUseSyncExternalStore: undefined | any = (React as any)[
 export function useMediaQueryNew(
   query: string,
   defaultMatches: boolean,
-  matchMedia: typeof window.matchMedia | null,
+  // matchMedia?: typeof window.matchMedia | null,
   ssrMatchMedia: ((query: string) => { matches: boolean }) | null,
-  noSsr: boolean
+  noSsr?: boolean
 ): boolean {
+  const supportMatchMedia =
+    typeof window !== "undefined" && typeof window.matchMedia !== "undefined";
+
+  const matchMedia = supportMatchMedia ? window.matchMedia : null;
+
   const getDefaultSnapshot = useCallback(
     () => defaultMatches,
     [defaultMatches]

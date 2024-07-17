@@ -1,18 +1,16 @@
 import Link from "next/link";
-import { UserDataBio } from "@/types";
 import { IoPerson } from "react-icons/io5";
+import { useAppProvider } from "@/hooks";
 
-interface Props {
-  dataBio: UserDataBio;
-}
+export default function PreviewBio() {
+  const { dataBio } = useAppProvider();
 
-export default function PreviewBio({ dataBio }: Props) {
   return (
     <section className="flex flex-auto flex-col items-center p-4 basis-1/4">
       <p className="text-neutral-100 mb-5">
         Este es su perfil de enlace{" "}
         <Link
-          href={`http://localhost:3000/${dataBio.name}`}
+          href={`${process.env.URL_FRONTEND}/${dataBio.name}`}
           target="_blank"
           className="underline text-blue-500"
         >
@@ -22,15 +20,11 @@ export default function PreviewBio({ dataBio }: Props) {
 
       <div className="w-full lg:w-[316px] xl:w-[460px] 2xl:w-[570px]">
         <picture className="relative">
-          <img
-            src={
-              dataBio.bannerImage?.length > 0
-                ? dataBio.bannerImage
-                : "https://media.bio.site/sites/b1f391a4-bc7c-4844-a167-24f87f88a449/oMwQYdp5JAYaTCByXCcEQF.png"
-            }
-            alt="Cover Photo"
-            className="object-cover h-[170px] w-full"
-          />
+          {dataBio.bannerImage.length !== 0 ? (
+            dataBio.bannerImage
+          ) : (
+            <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% h-[170px] w-full rounded-xl" />
+          )}
         </picture>
 
         <div className="profile-wrapper relative flex flex-col justify-center items-center">
@@ -49,10 +43,8 @@ export default function PreviewBio({ dataBio }: Props) {
           </div>
 
           <div className="links-profile-bio">
-            <p className="text-neutral-100 text-3xl text-center font-semibold mb-3">
-              {dataBio.title?.length === 0
-                ? "Nombre identificador"
-                : dataBio.title}
+            <p className="text-neutral-100 text-3xl text-center font-semibold my-3">
+              {dataBio.title?.length === 0 ? "" : dataBio.title}
             </p>
 
             <p className="text-neutral-400 text-base text-center">
@@ -62,17 +54,17 @@ export default function PreviewBio({ dataBio }: Props) {
             </p>
           </div>
 
-          <div className="card-network-social flex flex-col w-full shadow-md">
+          <div className="card-network-social flex flex-col w-full shadow-md z-20">
             {dataBio.links?.map((link) =>
               link.url ? (
                 <div
                   key={link._id}
-                  className="mt-5 flex-1 text-center bg-neutral-800 rounded-md cursor-pointer"
+                  className="mt-5 flex-1 text-center bg-[#27272a] rounded-md cursor-pointer"
                 >
                   <Link
                     target="_blank"
                     href={link.url}
-                    className="block flex-1 text-neutral-100 capitalize p-4"
+                    className="block flex-1 text-neutral-100 capitalize p-4 text-[15px]"
                   >
                     {link.customName.length !== 0
                       ? link.customName
@@ -87,3 +79,5 @@ export default function PreviewBio({ dataBio }: Props) {
     </section>
   );
 }
+
+// https://media.bio.site/sites/b1f391a4-bc7c-4844-a167-24f87f88a449/oMwQYdp5JAYaTCByXCcEQF.png

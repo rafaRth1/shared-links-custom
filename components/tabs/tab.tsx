@@ -23,7 +23,7 @@ export default function Tab(props: TabProps) {
   return (
     <button
       onClick={() => handleSelectedKey(item?.key)}
-      className={`rounded ${varients} ${
+      className={`rounded-xl ${varients} ${
         state?.selectedKey === item?.key ? "bg-neutral-800" : ""
       }`}
     >

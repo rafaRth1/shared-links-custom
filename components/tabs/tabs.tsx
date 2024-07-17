@@ -17,7 +17,7 @@ export default function Tabs({ children }: Props) {
 
   return (
     <div className="tabs">
-      <div className="flex gap-2 bg-neutral-900 rounded-xl p-1 h-12 max-w-max">
+      <div className="flex gap-2 bg-neutral-900 rounded-xl p-1 h-12 max-w-max text-sm">
         {[...state.collection].map((item) => {
           return (
             <Tab

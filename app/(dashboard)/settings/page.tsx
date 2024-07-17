@@ -1,8 +1,9 @@
 "use client";
 
-import { Spinner } from "@/components/Spinner/Spinner";
-import { getSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
+import { getSession } from "next-auth/react";
+import { Button, DateInput, Input } from "@nextui-org/react";
+import { CalendarDate } from "@internationalized/date";
 
 export default function Settings() {
   const [loading, setLoading] = useState(true);
@@ -46,47 +47,67 @@ export default function Settings() {
           <div className="max-w-md w-full h-[50px] bg-neutral-900 rounded-lg" />
         </div>
       ) : (
-        <form
-          className="flex flex-col items-center justify-center"
-          onSubmit={(e) => handleSubmit(e)}
-        >
-          <div className="bg-[#1a1b1a] mb-5 max-w-md w-full">
-            <label
-              className="block text-neutral-300 mb-2 text-sm"
-              htmlFor="name-bio"
-            >
-              Nombre:
-            </label>
+        <form className="flex flex-col" onSubmit={(e) => handleSubmit(e)}>
+          <div className="max-w-lg w-full mx-auto">
+            <Input
+              type="email"
+              name="email"
+              label="Correo Electronico"
+              className="mb-5"
+              value={"rafarth1@outlook.com"}
+              onChange={(e) => console.log(e.target.value)}
+            />
 
-            <input
-              id="name"
+            <Input
               type="text"
-              className="bg-neutral-800 text-neutral-100 p-2 w-full rounded-lg border-2 border-neutral-500 hover:border-neutral-600 focus-visible:border-neutral-400 outline-none"
+              name="name"
+              label="Nombre"
+              className="mb-5"
               value={data.name}
               onChange={(e) => setData({ ...data, name: e.target.value })}
             />
-          </div>
 
-          <div className="bg-[#1a1b1a] mb-5 max-w-md w-full">
-            <label
-              className="block text-neutral-300 mb-2 text-sm"
-              htmlFor="name-bio"
-            >
-              Nombre:
-            </label>
-
-            <input
-              id="name"
+            <Input
               type="text"
-              className="bg-neutral-800 text-neutral-100 p-2 w-full rounded-lg border-2 border-neutral-500 hover:border-neutral-600 focus-visible:border-neutral-400 outline-none"
+              name="lastname"
+              label="Apellido"
+              className="mb-5"
               value={data.lastName}
               onChange={(e) => setData({ ...data, lastName: e.target.value })}
             />
-          </div>
 
-          <button className="bg-purple-400 p-2 rounded-md max-w-md w-full font-medium">
-            Guardar Datos
-          </button>
+            <Input
+              type="password"
+              name="password"
+              label="Contraseña"
+              className="mb-5"
+              value={"123456"}
+              onChange={(e) => console.log(e.target.value)}
+            />
+
+            <DateInput
+              label={"Birth date"}
+              placeholderValue={new CalendarDate(1995, 11, 6)}
+              className="mb-5"
+            />
+
+            <Button
+              onClick={() => console.log("Guardando")}
+              className="w-full bg-gradient-to-r from-primary to-purple-950 text-neutral-100 p-3 rounded-md"
+            >
+              Guardar Datos
+            </Button>
+
+            {/* {!true ? (
+              <p className="text-green-600 mt-5 text-sm font-medium">
+                Datos guardados correctamente
+              </p>
+            ) : (
+              <p className="text-rose-600 mt-5 text-sm font-medium">
+                Hubo un error al guardar sus datos
+              </p>
+            )} */}
+          </div>
         </form>
       )}
     </div>

@@ -8,13 +8,14 @@ import Image from "next/image";
 import clientAxios from "@/utils/client-axios";
 import BgLogin from "@/public/bg-login.jpg";
 import Link from "next/link";
+import { Input } from "@nextui-org/react";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ type: false, msg: "" });
   const [dataForm, setDataForm] = useState({
-    email: "",
-    password: "",
+    email: "rafarth1@outlook.com",
+    password: "123456",
   });
   const router = useRouter();
 
@@ -63,43 +64,25 @@ export default function Login() {
             Iniciar sesión
           </h1>
 
-          <div className="bg-[#1a1b1a] mb-5">
-            <label
-              className="block text-neutral-300 mb-2 text-sm"
-              htmlFor="name-bio"
-            >
-              Escriba su email:
-            </label>
+          <Input
+            type="email"
+            label="Escriba su email"
+            className="my-4"
+            value={dataForm.email}
+            onChange={(e) =>
+              setDataForm({ ...dataForm, email: e.target.value })
+            }
+          />
 
-            <input
-              id="email"
-              type="email"
-              className="bg-neutral-800 text-neutral-100 p-2 w-full rounded-lg border-2 border-neutral-500 hover:border-neutral-600 focus-visible:border-neutral-400 outline-none"
-              value={dataForm.email}
-              onChange={(e) =>
-                setDataForm({ ...dataForm, email: e.target.value })
-              }
-            />
-          </div>
-
-          <div className="bg-[#1a1b1a] mb-5">
-            <label
-              className="block text-neutral-300 mb-2 text-sm"
-              htmlFor="name-bio"
-            >
-              Escriba su contraseña:
-            </label>
-
-            <input
-              id="password"
-              type="password"
-              className="bg-neutral-800 text-neutral-100 p-2 w-full rounded-lg border-2 border-neutral-500 hover:border-neutral-600 focus-visible:border-neutral-400 outline-none"
-              value={dataForm.password}
-              onChange={(e) =>
-                setDataForm({ ...dataForm, password: e.target.value })
-              }
-            />
-          </div>
+          <Input
+            type="password"
+            label="Escriba su contraseña"
+            className="my-4"
+            value={dataForm.password}
+            onChange={(e) =>
+              setDataForm({ ...dataForm, password: e.target.value })
+            }
+          />
 
           <p className="text-neutral-100 text-sm mb-5">
             ¿Te olvidaste tus credenciales?,{" "}
